@@ -1,6 +1,8 @@
 os-platform-finder
 ==================
 
+**NOTE:** Repackaged version. Find the original repository at https://github.com/aurbroszniowski/os-platform-finder
+
 Utility class to return the current OS Platform
 
 The Problem?
