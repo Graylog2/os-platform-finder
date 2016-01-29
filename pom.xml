@@ -55,6 +55,7 @@
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+    <tagNameFormat>@{project.version}</tagNameFormat>
   </properties>
 
   <dependencies>
