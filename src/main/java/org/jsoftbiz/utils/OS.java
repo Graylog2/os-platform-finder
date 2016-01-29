@@ -102,22 +102,23 @@ public class OS {
     return osInfo.getPlatformName();
   }
 
-  private static final Map<Double, String> macOs = new HashMap<Double, String>();
+  private static final Map<String, String> macOs = new HashMap<String, String>();
   private static final Map<Integer, String> darwin = new HashMap<Integer, String>();
   private static final List<String> linux = new ArrayList<String>();
 
   static {
-    macOs.put(10.0, "Puma");
-    macOs.put(10.1, "Cheetah");
-    macOs.put(10.2, "Jaguar");
-    macOs.put(10.3, "Panther");
-    macOs.put(10.4, "Tiger");
-    macOs.put(10.5, "Leopard");
-    macOs.put(10.6, "Snow Leopard");
-    macOs.put(10.7, "Snow Lion");
-    macOs.put(10.8, "Mountain Lion");
-    macOs.put(10.9, "Mavericks");
-    macOs.put(10.10, "Yosemite");
+    macOs.put("10.0", "Puma");
+    macOs.put("10.1", "Cheetah");
+    macOs.put("10.2", "Jaguar");
+    macOs.put("10.3", "Panther");
+    macOs.put("10.4", "Tiger");
+    macOs.put("10.5", "Leopard");
+    macOs.put("10.6", "Snow Leopard");
+    macOs.put("10.7", "Snow Lion");
+    macOs.put("10.8", "Mountain Lion");
+    macOs.put("10.9", "Mavericks");
+    macOs.put("10.10", "Yosemite");
+    macOs.put("10.11", "El Captain");
 
     darwin.put(5, "Puma");
     darwin.put(6, "Jaguar");
@@ -135,11 +136,12 @@ public class OS {
 
   private void initMacOsInfo(final String name, final String version, final String arch) {
     String[] versions = version.split("\\.");
-    double numericVersion = Double.parseDouble(versions[0] + "." + versions[1]);
+    String majorMinorVersion = versions[0] + "." + versions[1];
+    double numericVersion = Double.parseDouble(majorMinorVersion);
     if (numericVersion < 10)
       this.osInfo = new OsInfo(name, version, arch, "Mac OS " + version);
     else
-      this.osInfo = new OsInfo(name, version, arch, "OS X " + macOs.get(numericVersion) + " (" + version + ")");
+      this.osInfo = new OsInfo(name, version, arch, "OS X " + macOs.get(majorMinorVersion) + " (" + version + ")");
   }
 
   private void initDarwinOsInfo(final String name, final String version, final String arch) {
