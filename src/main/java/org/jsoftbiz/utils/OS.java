@@ -239,31 +239,10 @@ public class OS {
     if (f.exists()) {
       try {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
-        final OsInfo osInfo = readPlatformNameFromOsRelease(name, version, arch, br);
-        if (osInfo == null) {
-          return readPlatformNameFromOsReleaseForArchLinux(name, version, arch, br);
-        }
-        return osInfo;
+        return readPlatformNameFromOsRelease(name, version, arch, br);
       } catch (IOException e) {
         return null;
       }
-    }
-    return null;
-  }
-
-  OsInfo readPlatformNameFromOsReleaseForArchLinux(final String name, final String version, final String arch, final BufferedReader br) throws IOException {
-    String distribDescription = "Linux";
-    String distribId = null;
-
-    String line;
-    while ((line = br.readLine()) != null) {
-      if (line.startsWith("DISTRIB_DESCRIPTION="))
-        distribDescription = line.replace("DISTRIB_DESCRIPTION=", "").replace("\"", "");
-      if (line.startsWith("DISTRIB_ID="))
-        distribId = line.replace("DISTRIB_ID=", "").replace("\"", "");
-    }
-    if (distribDescription != null && distribId != null) {
-      return new OsInfo(name, version, arch, distribDescription + " (" + distribId + ")");
     }
     return null;
   }

@@ -100,20 +100,23 @@ public class OSTest {
   public void testLinuxOsReleaseArchLinux() throws NoSuchMethodException, IOException, InvocationTargetException, IllegalAccessException {
     BufferedReader mockFile = mock(BufferedReader.class);
     when(mockFile.readLine()).thenReturn(
-            "LSB_VERSION=1.4",
-            "DISTRIB_ID=Arch",
-            "DISTRIB_RELEASE=rolling",
-            "DISTRIB_DESCRIPTION=\"Arch Linux\"",
+            "NAME=\"Arch Linux\"",
+            "ID=arch",
+            "PRETTY_NAME=\"Arch Linux\"",
+            "ANSI_COLOR=\"0;36\"",
+            "HOME_URL=\"https://www.archlinux.org/\"",
+            "SUPPORT_URL=\"https://bbs.archlinux.org/\"",
+            "BUG_REPORT_URL=\"https://bugs.archlinux.org/\"",
             null);
 
     String name = "some name";
     String version = "4.1.4";
     String arch = "68000";
-    OS.OsInfo osInfo = new OS().readPlatformNameFromOsReleaseForArchLinux(name, version, arch, mockFile);
+    OS.OsInfo osInfo = new OS().readPlatformNameFromOsRelease(name, version, arch, mockFile);
     Assert.assertThat(osInfo.getName(), is(equalTo(name)));
     Assert.assertThat(osInfo.getVersion(), is(equalTo(version)));
     Assert.assertThat(osInfo.getArch(), is(equalTo(arch)));
-    Assert.assertThat(osInfo.getPlatformName(), is(equalTo("Arch Linux (Arch)")));
+    Assert.assertThat(osInfo.getPlatformName(), is(equalTo("Arch Linux (arch)")));
   }
 
   @Test
