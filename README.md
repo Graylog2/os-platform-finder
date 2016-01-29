@@ -1,5 +1,7 @@
 os-platform-finder
 ==================
+[![Build Status](https://travis-ci.org/Graylog2/os-platform-finder.svg?branch=master)](https://travis-ci.org/Graylog2/os-platform-finder)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.graylog.repackaged/os-platform-finder/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.graylog.repackaged/os-platform-finder)
 
 **NOTE:** Repackaged version. Find the original repository at https://github.com/aurbroszniowski/os-platform-finder
 
