@@ -153,6 +153,10 @@ public class OS {
     // The most likely is to have a LSB compliant distro
     osInfo = getPlatformNameFromLsbRelease(name, version, arch);
 
+    // Try new /etc/os-release file from systemd
+    if (osInfo == null)
+      osInfo = getPlatformNameFromOsRelease(name, version, arch);
+
     // Generic Linux platform name
     if (osInfo == null)
       osInfo = getPlatformNameFromFile(name, version, arch, "/etc/system-release");
@@ -225,6 +229,61 @@ public class OS {
       if (line.startsWith("PRETTY_NAME")) return new OsInfo(name, version, arch, line.substring(13, line.length() - 1));
     }
     return new OsInfo(name, version, arch, lineToReturn);
+  }
+
+   private OsInfo getPlatformNameFromOsRelease(final String name, final String version, final String arch) {
+    String fileName = "/etc/os-release";
+    File f = new File(fileName);
+    if (f.exists()) {
+      try {
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        final OsInfo osInfo = readPlatformNameFromOsRelease(name, version, arch, br);
+        if (osInfo == null) {
+          return readPlatformNameFromOsReleaseForArchLinux(name, version, arch, br);
+        }
+        return osInfo;
+      } catch (IOException e) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  OsInfo readPlatformNameFromOsReleaseForArchLinux(final String name, final String version, final String arch, final BufferedReader br) throws IOException {
+    String distribDescription = "Linux";
+    String distribId = null;
+
+    String line;
+    while ((line = br.readLine()) != null) {
+      if (line.startsWith("DISTRIB_DESCRIPTION="))
+        distribDescription = line.replace("DISTRIB_DESCRIPTION=", "").replace("\"", "");
+      if (line.startsWith("DISTRIB_ID="))
+        distribId = line.replace("DISTRIB_ID=", "").replace("\"", "");
+    }
+    if (distribDescription != null && distribId != null) {
+      return new OsInfo(name, version, arch, distribDescription + " (" + distribId + ")");
+    }
+    return null;
+  }
+
+  OsInfo readPlatformNameFromOsRelease(final String name, final String version, final String arch, final BufferedReader br) throws IOException {
+    String distribName = "Linux";
+    String distribVersion = "";
+    String distribId = null;
+
+    String line;
+    while ((line = br.readLine()) != null) {
+      if (line.startsWith("NAME="))
+        distribName = line.replace("NAME=", "").replace("\"", "");
+      if (line.startsWith("VERSION="))
+        distribVersion = line.replace("VERSION=", "").replace("\"", "") + " ";
+      if (line.startsWith("ID="))
+        distribId = line.replace("ID=", "").replace("\"", "");
+    }
+    if (distribName != null && distribId != null) {
+      return new OsInfo(name, version, arch, distribName + " " + distribVersion + "(" + distribId + ")");
+    }
+    return null;
   }
 
    private OsInfo getPlatformNameFromLsbRelease(final String name, final String version, final String arch) {
