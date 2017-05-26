@@ -144,15 +144,15 @@ public class OS {
     if (numericVersion < 10)
       this.osInfo = new OsInfo(name, version, arch, "Mac OS " + version);
     else if(numericVersion < 10.12d)
-      this.osInfo = new OsInfo(name, version, arch, "OS X " + macOs.get(majorMinorVersion) + " (" + version + ")");
+      this.osInfo = new OsInfo(name, version, arch, "OS X " + macOs.get(majorMinorVersion) + " (" + majorMinorVersion + ")");
     else
-      this.osInfo = new OsInfo(name, version, arch, "macOS " + macOs.get(majorMinorVersion) + " (" + version + ")");
+      this.osInfo = new OsInfo(name, version, arch, "macOS " + macOs.get(majorMinorVersion) + " (" + majorMinorVersion + ")");
   }
 
   private void initDarwinOsInfo(final String name, final String version, final String arch) {
     String[] versions = version.split("\\.");
     int numericVersion = Integer.parseInt(versions[0]);
-    this.osInfo = new OsInfo(name, version, arch, "OS X " + darwin.get(numericVersion) + " (" + version + ")");
+    this.osInfo = new OsInfo(name, version, arch, "OS X " + darwin.get(numericVersion) + " (" + numericVersion + ")");
   }
 
   private void initLinuxOsInfo(final String name, final String version, final String arch) {
