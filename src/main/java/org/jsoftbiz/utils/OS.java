@@ -120,6 +120,7 @@ public class OS {
     macOs.put("10.10", "Yosemite");
     macOs.put("10.11", "El Captain");
     macOs.put("10.12", "Sierra");
+    macOs.put("10.13", "High Sierra");
 
     darwin.put(5, "Puma");
     darwin.put(6, "Jaguar");
@@ -133,6 +134,7 @@ public class OS {
     darwin.put(14, "Yosemite");
     darwin.put(15, "El Captain");
     darwin.put(16, "Sierra");
+    darwin.put(17, "High Sierra");
 
     linux.addAll(Arrays.asList("Linux", "SunOS"));
   }
